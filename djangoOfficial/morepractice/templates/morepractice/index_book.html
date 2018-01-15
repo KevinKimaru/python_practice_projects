@@ -1,0 +1,18 @@
+{% if user.is_authenticated %}
+<h1>Welcome, {{ user.username }}. Thanks for logging in.</h1>
+{% else %}
+<p>Welcome, new user. Please log in.</p>
+{% endif %}
+
+{% if perms.morepractice %}
+<h1>Welcome, {{ user.username }}. Thanks for logging in.</h1>
+{% else %}
+<p>Welcome, new user. Please log in.</p>
+{% endif %}
+
+
+<form method="post">
+    {% csrf_token %}
+    {{ book_form }}
+    <input type="submit" value="Submit">
+</form>

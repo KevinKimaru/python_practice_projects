@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .fieldWrapper {
+            color: green;
+            background-color: beige;
+            width: 50%;
+        }
+    </style>
+</head>
+<body>
+<h1>Form using method 1</h1>
+<hr>
+<br><br>
+<form action="{% url 'practice:contact' %}" method="post">
+    {% csrf_token %}
+    {#    {{ form }}#}
+    {#    {{ form.as_p }}#}
+    {#    {{ form.as_table }}#}
+    {{ form.as_ul }}
+    <input type="submit" value="Submit"/>
+</form>
+<hr>
+<br><br>
+<hr>
+<br><br>
+
+<h1>Form using method 2</h1>
+<hr>
+<br><br>
+<form action="{% url 'practice:contact' %}" method="post">
+    {% csrf_token %}
+    {{ form.non_field_errors }}<br>
+    <div class="fieldWrapper">
+        {% if form.subject.errors %}
+            <ol>
+                {% for error in form.subject.errors %}
+                    <li style="color: red"><strong>{{ error|escape }}</strong></li>
+                {% endfor %}
+            </ol>
+        {% endif %}
+        {{ form.subject.label_tag }}<br>
+        {{ form.subject }}<br>
+    </div>
+    <div class="fieldWrapper">
+        {{ form.message.errors }}<br>
+        <label for="{{ form.message.id_for_label }}">Please input your message:</label><br>
+        {{ form.message }}<br>
+    </div>
+    <div class="fieldWrapper">
+        {{ form.sender.errors }}<br>
+        {{ form.sender.label_tag }}<br>
+        {{ form.sender }}<br>
+    </div>
+    <div class="fieldWrapper">
+        {{ form.cc_myself.errors }}<br>
+        {{ form.cc_myself.label_tag }}<br>
+        {{ form.cc_myself }}<br>
+    </div>
+    <input type="submit" value="Submit"/><br>
+</form>
+<hr>
+<br><br>
+<hr>
+<br><br>
+
+<h1>Form using method 3</h1>
+<hr>
+<br><br>
+<form action="{% url 'practice:contact' %}" method="post">
+    {% csrf_token %}
+    {{ form.non_field_errors }}<br>
+    {% for field in form %}
+        {{ field.errors }}
+        {{ field.label_tag }}
+        {{ field }}
+        {% if field.help_text %}
+            <P class="help">{{ field.help_text|safe }}</P>
+        {% endif %}
+        <br><br>
+    {% endfor %}
+    <input type="submit" value="Submit"/>
+</form>
+
+<hr>
+<br><br>
+<hr>
+<br><br>
+
+<h1>Form using method 4</h1>
+<hr>
+<br><br>
+{% include 'practice/form_snippet.html' %}
+
+</body>
+</html>

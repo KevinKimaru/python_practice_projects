@@ -1,0 +1,29 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'practice/bootstrap/css/bootstrap.css' %}">
+<script src="{% static 'practice/jquery.js' %}"></script>
+<form method="post">
+    {% csrf_token %}
+    {{ formset.management_form }}
+    {% if formset.non_form_errors %}
+        <div class="alert alert-danger">{{ formset.non_form_errors }}</div>
+    {% endif %}
+    {{ formset.management_form }}
+    <table>
+        {% for form in formset %}
+        <tr>
+            <td>
+                <ul>{{ form.as_ul }}</ul>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    <input type="hidden" value="false" name="additems" id="additems">
+    <button id="additemsbtn" onclick="add()" class="btn btn-primary">Add items to order</button>
+    <input type="submit" value="Submit order" class="btn btn-primary">
+</form>
+<script>
+    var element = document.getElementById('additems');
+    var add = function(event){
+        element.value = "true"
+    };
+</script>

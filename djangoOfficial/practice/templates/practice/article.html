@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<form action="{% url 'practice:article' %}" method="post">
+    {% csrf_token %}
+
+    {{ formset.management_form }}
+
+    {% if formset.errors %}
+        {% for error in formset.errors %}
+            <p>Errors:{{ formset.errors }}</p>
+        {% endfor %}
+    {% endif %}
+
+    <P>Total formset error count: {{ formset.total_error_count }}</P>
+
+    {{ formset.management_form }}
+
+    {% for form in formset %}
+        {{ form }}
+    {% endfor %}
+    <br><br><br>
+    {{ book_formset }}
+
+    <input type="submit" value="Submit"/>
+</form>
+<br><br><br><br><br>
+
+
+</body>
+</html>

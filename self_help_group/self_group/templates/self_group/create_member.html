@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="{% static 'self_group/bootstrap/css/bootstrap.css' %}">
+    <script src="{% static 'self_group/jquery.js' %}"></script>
+    <title>Create Members</title>
+    <style>
+        .error {
+            border-radius: 5px;
+            display: block;
+            font-size: 14px;
+            padding: 10px 20px;
+        }
+        input {
+            border-radius: 5px;
+            color:  #663300;
+            font-size: 14px;
+        }
+        body {
+            margin: 10px;
+        }
+
+    </style>
+</head>
+<body>
+<h1 class="text-primary text-center">Members Registration Forms</h1>
+<form action="" method="post">
+    {% csrf_token %}
+
+    {{ member_formset.management_form }}
+
+    {% if member_formset.errors %}
+        {% for error in member_formset.errors %}
+        <p class="error alert-danger">{{ error }}</p>
+        {% endfor %}<br>
+    {% endif %}
+
+
+    {{ member_formset.management_form }}
+
+
+    {% for form in member_formset %}
+            <div class="col-sm-3 col-sm-offset-1" role="form">
+            {% if form.non_field_errors %}
+                {% for error in form.non_field_errors %}
+                    <p class="error alert-danger">{{ error }}</p>
+                {% endfor %}<br>
+            {% endif %}
+
+            {% for field in form %}
+                {% if field.errors %}
+                    {% for error in field.errors %}
+                        <p class="error alert-danger">{{ error }}</p>
+                    {% endfor %}<br>
+                {% endif %}
+                <div class="form-group">
+                    {{ field.label_tag }}<br>
+                    {{ field }}<br>
+                    {% if field.help_text %}
+                        <P class="help">{{ field.help_text|safe }}</P>
+                        <br>
+                    {% endif %}
+                </div>
+
+            {% endfor %}
+            </div>
+    {% endfor %}
+    <input type="hidden" value="false" name="additems" id="additems">
+    <div class="col-sm-3 col-sm-offset-1"><button id="additemsbtn" onclick="add()" class="btn btn-danger">Add member</button>
+        <br><br></div>
+    <br><br>
+    <input type="submit" value="Submit" class="btn btn-primary col-sm-6 col-sm-offset-3"/>
+</form>
+
+<script>
+    var element = document.getElementById('additems');
+    var add = function(event){
+        element.value = "true";
+    };
+</script>
+</body>
+</html>
+

@@ -1,0 +1,10 @@
+<form method="post">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Login">
+</form>
+
+<form method="post" action="{% url 'morepractice:logout' %}">
+     {% csrf_token %}
+    <input type="submit" value="Logout">
+</form>
